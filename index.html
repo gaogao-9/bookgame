@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>テストゲームブック</title>
+	<script src="js/riot+compiler.min.js"></script>
+	<script src="js/index.js" defer></script>
+</head>
+<body>
+	<app></app>
+	
+	<script type="riot/tag">
+		<app>
+			<h1>テストゲームブック - { pages[hash].title }</h1>
+			<p if={ pages[hash].img }><img src={ "img/" + pages[hash].img + ".png" }></p>
+			<p if={ pages[hash].text }>{ pages[hash].text }</p>
+			<ul each={ item, i in pages[hash].choice }>
+				<li><a href={ "#"+ (item.hash || item)}>{ (item.title || pages[item].title) }</a></li>
+			</ul>
+			<a href="#top">トップページに戻る</a>
+			
+			this.pages = opts;
+			
+			riot.route((tagname)=> {
+				this.hash  = tagname||"top";
+				
+				this.update();
+			});
+			
+			riot.route.start(true);
+		</app>
+	</script>
+</body>
+</html>
